@@ -1,12 +1,11 @@
-// Type definitions
-declare namespace NodeJS {
-  interface ProcessEnv {
-    API_KEY?: string;
-    GEMINI_API_KEY?: string;
-    [key: string]: string | undefined;
-  }
+/// <reference types="vite/client" />
+
+interface ImportMetaEnv {
+  readonly VITE_OPENAI_BASE_URL?: string;
+  readonly VITE_OPENAI_API_KEY?: string;
+  readonly VITE_OPENAI_MODEL?: string;
 }
 
-declare const process: {
-  env: NodeJS.ProcessEnv;
-};
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}

@@ -4,14 +4,25 @@ import { FALLBACK_MODELS } from "../constants";
 
 export type AIStyleType = 'standard';
 
+// Vite only exposes variables prefixed with VITE_ to browser code. Keep the
+// configuration lookup in one place so all Gemini requests use the same key.
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY?.trim();
+
+const requireGeminiApiKey = (): string => {
+  if (!GEMINI_API_KEY) {
+    throw new Error("未检测到 Gemini API Key。请复制 .env.example 为 .env，并填写 VITE_GEMINI_API_KEY 后重启服务。");
+  }
+  return GEMINI_API_KEY;
+};
+
 export const fetchAvailableModels = async (): Promise<ModelOption[]> => {
-  if (!process.env.API_KEY) {
+  if (!GEMINI_API_KEY) {
     return FALLBACK_MODELS;
   }
 
   try {
     const ai = new GoogleGenAI({ 
-      apiKey: process.env.API_KEY,
+      apiKey: GEMINI_API_KEY,
       httpOptions: {
         headers: {
           'User-Agent': 'aistudio-build',
@@ -153,13 +164,9 @@ export const optimizeContentWithGeminiStream = async (
   style: AIStyleType = 'standard',
   modelName: string = 'gemini-flash-latest'
 ): Promise<string> => {
-  if (!process.env.API_KEY) {
-    throw new Error("未检测到 Gemini API Key。请在项目根目录 .env 文件中配置 GEMINI_API_KEY 后重试。");
-  }
-
   try {
     const ai = new GoogleGenAI({ 
-      apiKey: process.env.API_KEY,
+      apiKey: requireGeminiApiKey(),
       httpOptions: {
         headers: {
           'User-Agent': 'aistudio-build',
@@ -191,11 +198,8 @@ export const optimizeContentWithGeminiStream = async (
 };
 
 export const getTrendingTopics = async (modelName: string = 'gemini-flash-latest'): Promise<{ topics: string[], sources: { uri: string, title: string }[] }> => {
-  if (!process.env.API_KEY) {
-    throw new Error("未检测到 Gemini API Key。请在项目根目录 .env 文件中配置 GEMINI_API_KEY。");
-  }
   const ai = new GoogleGenAI({ 
-    apiKey: process.env.API_KEY,
+    apiKey: requireGeminiApiKey(),
     httpOptions: {
       headers: {
         'User-Agent': 'aistudio-build',
@@ -241,11 +245,8 @@ export interface ThemeGenerationResult {
 }
 
 export const generateThemeFromTopic = async (topic: string, modelName: string = 'gemini-flash-latest'): Promise<ThemeGenerationResult> => {
-  if (!process.env.API_KEY) {
-    throw new Error("未检测到 Gemini API Key。请在项目根目录 .env 文件中配置 GEMINI_API_KEY。");
-  }
   const ai = new GoogleGenAI({ 
-    apiKey: process.env.API_KEY,
+    apiKey: requireGeminiApiKey(),
     httpOptions: {
       headers: {
         'User-Agent': 'aistudio-build',

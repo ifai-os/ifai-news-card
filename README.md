@@ -61,13 +61,13 @@ npm install
 cp .env.example .env
 ```
 
-打开 `.env` 文件，填入从 [Google AI Studio](https://aistudio.google.com/app/apikey) 申请的免费 API Key：
+打开 `.env` 文件，填入从 [Google AI Studio](https://aistudio.google.com/app/apikey) 申请的 API Key：
 
 ```env
-GEMINI_API_KEY=AIzaSy...你的Gemini密钥
+VITE_GEMINI_API_KEY=AIzaSy...你的Gemini密钥
 ```
 
-> 💡 **提示**：Google Gemini API 提供慷慨的免费调用配额，可在 Google AI Studio 快速一键创建。
+配置项必须使用 `VITE_` 前缀；修改 `.env` 后需要重启 `npm run dev`。未配置 Key 时，海报编辑和导出仍可使用，AI 排版、热点与主题生成功能会提示配置方式。
 
 ### 4. 启动本地开发服务
 
@@ -113,11 +113,11 @@ npm run build
 
 1. **绝对不要将 `.env` 提交到公开仓库**：
    - 项目自带的 `.gitignore` 已配置过滤所有 `.env`、`.env.*` 文件和 `dist/` 构建目录。
-   - 团队开发或部署时，请在托管平台（如 Vercel、Netlify、Cloudflare）的 Environment Variables 控制台中配置 `GEMINI_API_KEY`。
+   - 本项目是纯前端应用，`VITE_GEMINI_API_KEY` 会在构建后提供给浏览器。请仅在个人本地使用或受信任的内部环境使用该配置。
 
 2. **生产环境部署建议**：
-   - 本项目通过 `vite.config.ts` 中的 `define` 注入环境变量。
-   - 若部署为纯静态页面，建议在构建平台（如 Vercel / Netlify Settings -> Environment Variables）中设置 `GEMINI_API_KEY`。
+   - 不要将带有真实 Key 的纯静态构建产物公开部署。
+   - 面向外部用户部署时，请将 Gemini 调用改为由服务端接口代理，并在服务端环境变量中保存 Key。
 
 ---
 

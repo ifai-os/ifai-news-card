@@ -21,6 +21,9 @@ dist-ssr/
 !.env.example
 *.env
 
+# Docker runtime configuration contains the browser-visible gateway credentials.
+docker/runtime-config.js
+
 # Editor & OS files
 .vscode/*
 !.vscode/extensions.json

@@ -3,9 +3,12 @@ import { FALLBACK_MODELS } from "../constants";
 
 export type AIStyleType = 'standard';
 
-const OPENAI_BASE_URL = import.meta.env.VITE_OPENAI_BASE_URL?.trim().replace(/\/+$/, '');
-const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY?.trim();
-const DEFAULT_OPENAI_MODEL = import.meta.env.VITE_OPENAI_MODEL?.trim() || 'gpt-4o-mini';
+// Runtime configuration takes precedence in Docker, so a configuration change does
+// not require rebuilding the static image. Local .env values remain supported.
+const runtimeConfig = window.__APP_CONFIG__ || {};
+const OPENAI_BASE_URL = (runtimeConfig.VITE_OPENAI_BASE_URL || import.meta.env.VITE_OPENAI_BASE_URL)?.trim().replace(/\/+$/, '');
+const OPENAI_API_KEY = (runtimeConfig.VITE_OPENAI_API_KEY || import.meta.env.VITE_OPENAI_API_KEY)?.trim();
+const DEFAULT_OPENAI_MODEL = (runtimeConfig.VITE_OPENAI_MODEL || import.meta.env.VITE_OPENAI_MODEL)?.trim() || 'gpt-4o-mini';
 
 const requireGatewayConfig = () => {
   if (!OPENAI_BASE_URL || !OPENAI_API_KEY) {

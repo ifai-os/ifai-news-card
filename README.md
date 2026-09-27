@@ -87,6 +87,25 @@ npm run build
 
 打包构建产物将输出在 `dist/` 目录下。
 
+### 6. 使用 Docker 稳定运行
+
+Docker 镜像采用多阶段构建，最终仅包含 Nginx 和静态产物；Compose 内置容器自动重启和健康检查。首次部署时创建运行时配置文件：
+
+```bash
+cp docker/runtime-config.example.js docker/runtime-config.js
+# 编辑 docker/runtime-config.js，填写网关地址、浏览器可用的 API Key 与默认模型
+docker compose up -d --build
+```
+
+默认访问地址为 `http://localhost:8080`。可通过 `APP_PORT=3000 docker compose up -d` 修改宿主机端口。运行状态和健康状态可分别查看：
+
+```bash
+docker compose ps
+curl http://localhost:8080/healthz
+```
+
+`docker/runtime-config.js` 不会进入镜像或 Git 仓库；修改它后刷新浏览器即可读取新配置，无需重新构建或重启容器。该文件会下发给浏览器，因而只应填写面向浏览器的受限 Key。面向公网的生产环境仍应将 AI 网关调用迁移至后端代理保存密钥。
+
 ---
 
 ## 📂 项目目录结构

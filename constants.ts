@@ -1,50 +1,15 @@
 import { ThemeConfig, ModelOption } from './types';
 
-export const DEFAULT_MODEL_ID = 'gemini-flash-latest';
+export const DEFAULT_MODEL_ID = import.meta.env.VITE_OPENAI_MODEL?.trim() || 'gpt-4o-mini';
 
 export const FALLBACK_MODELS: ModelOption[] = [
   {
-    id: 'gemini-flash-latest',
-    name: 'Gemini Flash (Latest)',
-    badge: '最新默认',
-    description: '官方动态最新 Flash 模型端点，推荐默认使用',
+    id: DEFAULT_MODEL_ID,
+    name: DEFAULT_MODEL_ID,
+    badge: '默认模型',
+    description: '在 .env 的 VITE_OPENAI_MODEL 中配置',
     type: 'flash'
   },
-  {
-    id: 'gemini-3.8-flash',
-    name: 'Gemini 3.8 Flash',
-    badge: '最新版本',
-    description: '最新一代 Flash 极速响应，排版与结构化解析能力最强',
-    type: 'flash'
-  },
-  {
-    id: 'gemini-3.1-pro-preview',
-    name: 'Gemini 3.1 Pro',
-    badge: '最强推理',
-    description: '复杂深度逻辑与高级长篇内容排版润色',
-    type: 'pro'
-  },
-  {
-    id: 'gemini-3.1-flash-lite',
-    name: 'Gemini 3.1 Flash-Lite',
-    badge: '超轻快',
-    description: '极低延迟与高吞吐，适合极速文本精炼',
-    type: 'lite'
-  },
-  {
-    id: 'gemini-2.5-flash',
-    name: 'Gemini 2.5 Flash',
-    badge: '稳定版',
-    description: '成熟可靠的生产级闪电大模型',
-    type: 'flash'
-  },
-  {
-    id: 'gemini-2.5-pro',
-    name: 'Gemini 2.5 Pro',
-    badge: '稳定推理',
-    description: '成熟可靠的生产级深度分析模型',
-    type: 'pro'
-  }
 ];
 
 export const AVAILABLE_MODELS = FALLBACK_MODELS;

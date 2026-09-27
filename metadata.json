@@ -1,0 +1,8 @@
+{
+  "name": "AI 大事件海报生成器",
+  "description": "Transform messy update lists into beautiful, shareable social media image cards using Gemini AI. Features automatic formatting, multiple themes, and high-quality export.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

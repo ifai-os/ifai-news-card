@@ -9,3 +9,11 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+interface Window {
+  __APP_CONFIG__?: {
+    VITE_OPENAI_BASE_URL?: string;
+    VITE_OPENAI_API_KEY?: string;
+    VITE_OPENAI_MODEL?: string;
+  };
+}

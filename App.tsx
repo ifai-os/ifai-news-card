@@ -12,11 +12,11 @@ type DownloadPhase = 'idle' | 'fonts' | 'rendering';
 
 const App: React.FC = () => {
   const [content, setContent] = useState<string>(INITIAL_TEXT);
-  const [theme, setTheme] = useState<ThemeConfig>(THEMES.find(t => t.id === 'soft-gradient') || THEMES[0]);
+  const [theme, setTheme] = useState<ThemeConfig>(THEMES.find(t => t.id === 'caramel-pop') || THEMES[0]);
   const [customThemes, setCustomThemes] = useState<ThemeConfig[]>([]);
   const [scale, setScale] = useState<number>(1.15);
   const [lineHeight, setLineHeight] = useState<number>(1.6);
-  const [width, setWidth] = useState<number>(390);
+  const [width, setWidth] = useState<number>(550);
   const [footerText, setFooterText] = useState<string>("产品君");
   const [avatarImage, setAvatarImage] = useState<string | null>(DEFAULT_AVATAR);
   
